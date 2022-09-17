@@ -66,4 +66,7 @@
   <ItemGroup>
     <RefactorLog Include="BooksSpotLibrary.Database.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="BooksSpotLibrary.Database.publish.xml" />
+  </ItemGroup>
 </Project>
