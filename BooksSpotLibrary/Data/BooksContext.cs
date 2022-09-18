@@ -16,8 +16,7 @@ namespace BooksSpotLibrary.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ReservationEntity>().HasNoKey();
-            modelBuilder.Entity<BorrowingEntity>().HasNoKey();
+
         }
 
         public DbSet<BookEntity> Books { get; set; }
