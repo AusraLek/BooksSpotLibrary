@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksSpotLibrary", "BooksSpotLibrary\BooksSpotLibrary.csproj", "{BC60C5DF-45E3-4771-856C-33DCE059FF0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BooksSpotLibrary", "BooksSpotLibrary\BooksSpotLibrary.csproj", "{BC60C5DF-45E3-4771-856C-33DCE059FF0B}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BooksSpotLibrary.Database", "BooksSpotLibrary.Database\BooksSpotLibrary.Database.sqlproj", "{C84F1DBA-53E5-49FC-A1F5-13E9A32A59B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksSpotLibrary.Tests", "BooksSpotLibrary.Tests\BooksSpotLibrary.Tests.csproj", "{FD46BB2F-3A7E-422A-9091-D1A78BC73E7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{C84F1DBA-53E5-49FC-A1F5-13E9A32A59B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C84F1DBA-53E5-49FC-A1F5-13E9A32A59B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C84F1DBA-53E5-49FC-A1F5-13E9A32A59B5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FD46BB2F-3A7E-422A-9091-D1A78BC73E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD46BB2F-3A7E-422A-9091-D1A78BC73E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD46BB2F-3A7E-422A-9091-D1A78BC73E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD46BB2F-3A7E-422A-9091-D1A78BC73E7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

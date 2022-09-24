@@ -5,18 +5,8 @@ namespace BooksSpotLibrary.Data
     public class BooksContext : DbContext
     {
 
-        public BooksContext()
+        public BooksContext(DbContextOptions<BooksContext> options) : base(options)
         {
-
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-4SKOP0M;Database=BooksDb;Trusted_Connection=True;");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
         }
 
         public DbSet<BookEntity> Books { get; set; }

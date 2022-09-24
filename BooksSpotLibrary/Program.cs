@@ -1,7 +1,11 @@
+using BooksSpotLibrary.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<BooksContext>(options =>
+                options.UseSqlServer("Server=DESKTOP-4SKOP0M;Database=BooksDb;Trusted_Connection=True;"));
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

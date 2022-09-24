@@ -10,9 +10,9 @@ namespace BooksSpotLibrary.Controllers
     public class BooksController : ControllerBase
     {
         private readonly BooksContext context;
-        public BooksController()
+        public BooksController(BooksContext context)
         {
-            this.context = new BooksContext();
+            this.context = context;
         }
 
         [HttpPost("Search")]
@@ -94,19 +94,29 @@ namespace BooksSpotLibrary.Controllers
         }
 
         [HttpGet("borrow/{bookId}")]
-        public void Borrow(int bookId)
+        public ActionResult Borrow(int bookId)
         {
             var userId = 1;
 
             var borrowing = new BorrowingEntity { UserId = userId, BookId = bookId };
-            this.context.Borrowings.Add(borrowing);
-
             var book = this.context.Books.SingleOrDefault(b => b.Id == bookId);
-            book.BookStatus = "Borrowed";
-            this.context.Books.Attach(book);
-            this.context.Entry(book).State = EntityState.Modified;
 
-            this.context.SaveChanges();
+            if (book == null)
+            {
+                return this.NotFound();
+            }
+
+            if (book.BookStatus == "Available")
+            {
+                this.context.Borrowings.Add(borrowing);
+                book.BookStatus = "Borrowed";
+                this.context.Books.Attach(book);
+                this.context.Entry(book).State = EntityState.Modified;
+                this.context.SaveChanges();
+                return this.Ok();
+            }
+
+            return this.BadRequest();
         }
 
         [HttpPost("add")]
