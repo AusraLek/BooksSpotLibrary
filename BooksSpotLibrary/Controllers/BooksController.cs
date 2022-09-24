@@ -15,39 +15,42 @@ namespace BooksSpotLibrary.Controllers
             this.context = new BooksContext();
         }
 
-        [HttpGet("Search/{category?}/{text?}")]
-        public IEnumerable<BookEntity> Search(string category, string text)
+        [HttpPost("Search")]
+        public IEnumerable<BookEntity> Search(SearchOptions searchOptions)
         {
-            if(text == null)
+            if(searchOptions == null || searchOptions.Text == null)
             {
                 return this.context.Books.ToList();
             }
-            if(category == "bytitle")
+
+            var searchRecords = this.context.Books.Where(book => searchOptions.Status.Contains(book.BookStatus));
+
+            if (searchOptions.Category == "bytitle")
             {
-                return this.context.Books.Where(book => book.Title.ToLower().Contains(text.ToLower())).ToList();
+                return searchRecords.Where(book => book.Title.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
             }
-            if (category == "byauthor")
+            if (searchOptions.Category == "byauthor")
             {
-                return this.context.Books.Where(book => book.Author.ToLower().Contains(text.ToLower())).ToList();
+                return searchRecords.Where(book => book.Author.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
             }
-            if (category == "bypublisher")
+            if (searchOptions.Category == "bypublisher")
             {
-                return this.context.Books.Where(book => book.Publisher.ToLower().Contains(text.ToLower())).ToList();
+                return searchRecords.Where(book => book.Publisher.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
             }
-            if (category == "bygenre")
+            if (searchOptions.Category == "bygenre")
             {
-                return this.context.Books.Where(book => book.Genre.ToLower().Contains(text.ToLower())).ToList();
+                return searchRecords.Where(book => book.Genre.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
             }
-            if (category == "byisbncode")
+            if (searchOptions.Category == "byisbncode")
             {
-                return this.context.Books.Where(book => book.ISBN.ToString().Contains(text.ToLower())).ToList();
+                return searchRecords.Where(book => book.ISBN.ToString().Contains(searchOptions.Text.ToLower())).ToList();
             }
-            if (category == "byyear")
+            if (searchOptions.Category == "byyear")
             {
-                return this.context.Books.Where(book => book.PublishDate.Year.ToString() == text).ToList();
+                return searchRecords.Where(book => book.PublishDate.Year.ToString() == searchOptions.Text).ToList();
             }
 
-            return this.context.Books.ToList();
+            return searchRecords.ToList();
         }
 
         [HttpGet("{bookId}")]
