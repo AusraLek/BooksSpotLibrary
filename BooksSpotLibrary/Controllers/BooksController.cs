@@ -23,32 +23,19 @@ namespace BooksSpotLibrary.Controllers
                 return this.context.Books.ToList();
             }
 
-            var searchRecords = this.context.Books.Where(book => searchOptions.Status.Contains(book.BookStatus));
+            var searchRecords = this.context.Books.Where(book => searchOptions.Status.Contains(book.BookStatus)).AsEnumerable();
 
-            if (searchOptions.Category == "bytitle")
+
+            searchRecords = searchOptions.Category switch
             {
-                return searchRecords.Where(book => book.Title.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
-            }
-            if (searchOptions.Category == "byauthor")
-            {
-                return searchRecords.Where(book => book.Author.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
-            }
-            if (searchOptions.Category == "bypublisher")
-            {
-                return searchRecords.Where(book => book.Publisher.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
-            }
-            if (searchOptions.Category == "bygenre")
-            {
-                return searchRecords.Where(book => book.Genre.ToLower().Contains(searchOptions.Text.ToLower())).ToList();
-            }
-            if (searchOptions.Category == "byisbncode")
-            {
-                return searchRecords.Where(book => book.ISBN.ToString().Contains(searchOptions.Text.ToLower())).ToList();
-            }
-            if (searchOptions.Category == "byyear")
-            {
-                return searchRecords.Where(book => book.PublishDate.Year.ToString() == searchOptions.Text).ToList();
-            }
+                "bytitle" => searchRecords.Where(book => this.MatchesSearch(book.Title, searchOptions)),
+                "byauthor" => searchRecords.Where(book => this.MatchesSearch(book.Author, searchOptions)),
+                "bypublisher" => searchRecords.Where(book => this.MatchesSearch(book.Publisher, searchOptions)),
+                "bygenre" => searchRecords.Where(book => this.MatchesSearch(book.Genre, searchOptions)),
+                "byisbncode" => searchRecords.Where(book => this.MatchesSearch(book.ISBN.ToString(), searchOptions)),
+                "byyear" => searchRecords.Where(book => this.MatchesSearch(book.PublishDate.Year.ToString(), searchOptions)),
+                _ => searchRecords,
+            };
 
             return searchRecords.ToList();
         }
@@ -157,6 +144,11 @@ namespace BooksSpotLibrary.Controllers
                 return this.Ok();
             }
             return this.NotFound();
+        }
+
+        private bool MatchesSearch(string value, SearchOptions searchOptions)
+        {
+            return value.ToLower().Contains(searchOptions.Text.ToLower());
         }
     }
 }

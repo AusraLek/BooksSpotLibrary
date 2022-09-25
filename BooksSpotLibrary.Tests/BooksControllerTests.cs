@@ -51,6 +51,8 @@ namespace BooksSpotLibrary.Tests
                     Title = "TestTitle",
                     Author = "Vard",
                     BookStatus = "Available",
+                    Genre = "TestGenre",
+                    Publisher = "TestPublisher",
                 });
         }
 
@@ -308,6 +310,8 @@ namespace BooksSpotLibrary.Tests
                 Title = "TestTitle",
                 Author = "Vard",
                 BookStatus = "Available",
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
 
             var book2 = new BookEntity
@@ -316,6 +320,8 @@ namespace BooksSpotLibrary.Tests
                 Title = "TestTitle",
                 Author = "Vard",
                 BookStatus = "Reserved",
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
             var book3 = new BookEntity
             {
@@ -323,6 +329,8 @@ namespace BooksSpotLibrary.Tests
                 Title = "TestTitle",
                 Author = "Vard",
                 BookStatus = "Borrowed",
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
             var bookDelete = new BookEntity
             {
@@ -330,6 +338,8 @@ namespace BooksSpotLibrary.Tests
                 Title = "TestTitle",
                 Author = "Vard",
                 BookStatus = "Borrowed",
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
             var bookByAuthor = new BookEntity
             {
@@ -337,6 +347,8 @@ namespace BooksSpotLibrary.Tests
                 Title = "TestTitle",
                 Author = "Author",
                 BookStatus = "Borrowed",
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
             var bookByTitle = new BookEntity
             {
@@ -344,6 +356,8 @@ namespace BooksSpotLibrary.Tests
                 Title = "Title",
                 Author = "Author",
                 BookStatus = "Available",
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
             var bookBypPublisher = new BookEntity
             {
@@ -352,6 +366,7 @@ namespace BooksSpotLibrary.Tests
                 Author = "Author",
                 BookStatus = "Borrowed",
                 Publisher = "Publisher",
+                Genre = "TestGenre",
             };
             var bookByGenre = new BookEntity
             {
@@ -360,6 +375,7 @@ namespace BooksSpotLibrary.Tests
                 Author = "Author",
                 BookStatus = "Available",
                 Genre = "Genre",
+                Publisher = "TestPublisher",
             };
             var bookByISBNCode = new BookEntity
             {
@@ -368,6 +384,8 @@ namespace BooksSpotLibrary.Tests
                 Author = "Author",
                 BookStatus = "Available",
                 ISBN = 1234567,
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
             var bookByYear = new BookEntity
             {
@@ -377,6 +395,8 @@ namespace BooksSpotLibrary.Tests
                 BookStatus = "Available",
                 ISBN = 1234567,
                 PublishDate = new DateTime(2000,02,02),
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
             };
 
             database.Books.Add(book);
