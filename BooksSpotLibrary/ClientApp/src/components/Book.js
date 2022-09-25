@@ -51,9 +51,15 @@ const Book = (props) => {
                 <div>Genre: {props.book.genre}</div>
                 <div>ISBN code: {props.book.isbn}</div>
                 <div>Book Status: {props.book.bookStatus}</div>
-                <a href="#" className="btn btn-warning m-1" onClick={reserve}>Reserve</a>
-                <a href="#" className="btn btn-info m-1" onClick={borrow}>Borrow</a>
-                <a href="#" className="btn btn-outline-danger m-1" onClick={returnBook}>Return</a>
+                {
+                    props.reserve === true && props.book.bookStatus === "Available" ? <a href="#" className="btn btn-warning m-1" onClick={reserve}>Reserve</a> : null
+                }
+                {
+                    props.borrow === true  && props.book.bookStatus === "Reserved" ? <a href="#" className="btn btn-info m-1" onClick={borrow}>Borrow</a> : null
+                }
+                {
+                    props.return === true ? <a href="#" className="btn btn-outline-danger m-1" onClick={returnBook}>Return</a> : null
+                }
 
             </div>
         </div>
