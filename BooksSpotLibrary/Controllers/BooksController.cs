@@ -139,7 +139,6 @@ namespace BooksSpotLibrary.Controllers
          [HttpPost("update/{bookId}")]
          public void Update(BookEntity book, int bookId)
          {
-            //if (!string.IsNullOrWhiteSpace
             book.Id = bookId;
             this.context.Books.Attach(book);
             this.context.Entry(book).State = EntityState.Modified;

@@ -205,6 +205,96 @@ namespace BooksSpotLibrary.Tests
                 .Be((int)HttpStatusCode.BadRequest);
         }
 
+        [TestMethod]
+        public void Add()
+        {
+            // Arrange
+            var book = new BookEntity
+            {
+                Title = "AddBookTestTitle",
+                Author = "Name",
+                BookStatus = "Available",
+            };
+
+            // Act
+            this.controller.Add(book);
+
+            // Assert
+            this.database.Books
+                .Where(book => book.Title == "AddBookTestTitle")
+                .FirstOrDefault()
+                .Should()
+                .BeEquivalentTo(book);
+        }
+
+        [TestMethod]
+        public void DeleteWhenBookExists()
+        {
+            // Arrange
+            var bookId = 127;
+
+            // Act
+            var result = this.controller.Delete(bookId);
+
+            // Assert
+            this.database.Books
+                .Where(book => book.Id == bookId)
+                .FirstOrDefault()
+                .Should()
+                .BeNull();
+
+            result
+                .Should()
+                .BeOfType<OkResult>()
+                .Which
+                .StatusCode
+                .Should()
+                .Be((int)HttpStatusCode.OK);
+        }
+
+        [TestMethod]
+        public void DeleteWhenBookNotExist()
+        {
+            // Act
+            var result = this.controller.Delete(457);
+
+            // Assert
+            result
+                .Should()
+                .BeOfType<NotFoundResult>()
+                .Which
+                .StatusCode
+                .Should()
+                .Be((int)HttpStatusCode.NotFound);
+        }
+
+        [TestMethod]
+        [DataRow("bytitle", "Title", 129)]
+        [DataRow("byauthor", "Author", 128)]
+        [DataRow("bypublisher", "Publisher", 130)]
+        [DataRow("bygenre", "Genre", 131)]
+        [DataRow("byisbncode", "1234567", 132)]
+        [DataRow("byyear", "2000", 133)]
+        public void SearchByTitle(string category, string text, int bookId)
+        {
+            // Arrange
+            var searchOptions = new SearchOptions
+            {
+                Category = category,
+                Text = text,
+                Status = new [] {"Available", "Borrowed", "Reserved"}
+            };
+
+            // Act
+            var result = this.controller.Search(searchOptions);
+
+            // Assert
+            result
+                 .Select(book => book.Id)
+                 .Should()
+                 .Contain(bookId);
+        }
+
         private BooksContext CreateDatabase()
         {
             var random = new Random();
@@ -234,9 +324,71 @@ namespace BooksSpotLibrary.Tests
                 Author = "Vard",
                 BookStatus = "Borrowed",
             };
+            var bookDelete = new BookEntity
+            {
+                Id = 127,
+                Title = "TestTitle",
+                Author = "Vard",
+                BookStatus = "Borrowed",
+            };
+            var bookByAuthor = new BookEntity
+            {
+                Id = 128,
+                Title = "TestTitle",
+                Author = "Author",
+                BookStatus = "Borrowed",
+            };
+            var bookByTitle = new BookEntity
+            {
+                Id = 129,
+                Title = "Title",
+                Author = "Author",
+                BookStatus = "Available",
+            };
+            var bookBypPublisher = new BookEntity
+            {
+                Id = 130,
+                Title = "TestTitle",
+                Author = "Author",
+                BookStatus = "Borrowed",
+                Publisher = "Publisher",
+            };
+            var bookByGenre = new BookEntity
+            {
+                Id = 131,
+                Title = "TestTitle",
+                Author = "Author",
+                BookStatus = "Available",
+                Genre = "Genre",
+            };
+            var bookByISBNCode = new BookEntity
+            {
+                Id = 132,
+                Title = "TestTitle",
+                Author = "Author",
+                BookStatus = "Available",
+                ISBN = 1234567,
+            };
+            var bookByYear = new BookEntity
+            {
+                Id = 133,
+                Title = "TestTitle",
+                Author = "Author",
+                BookStatus = "Available",
+                ISBN = 1234567,
+                PublishDate = new DateTime(2000,02,02),
+            };
+
             database.Books.Add(book);
             database.Books.Add(book2);
             database.Books.Add(book3);
+            database.Books.Add(bookDelete);
+            database.Books.Add(bookByAuthor);
+            database.Books.Add(bookByTitle);
+            database.Books.Add(bookBypPublisher);
+            database.Books.Add(bookByGenre);
+            database.Books.Add(bookByISBNCode);
+            database.Books.Add(bookByYear);
             database.SaveChanges();
 
             return database;
