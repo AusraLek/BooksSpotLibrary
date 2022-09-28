@@ -93,7 +93,7 @@ namespace BooksSpotLibrary.Controllers
                 return this.NotFound();
             }
 
-            if (book.BookStatus == "Available")
+            if (book.BookStatus == "Reserved")
             {
                 this.context.Borrowings.Add(borrowing);
                 book.BookStatus = "Borrowed";
