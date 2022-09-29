@@ -157,10 +157,10 @@ namespace BooksSpotLibrary.Tests
         }
 
         [TestMethod]
-        public void BorrowBookWhenExistsAndAvailable()
+        public void BorrowBookWhenExistsAndReserved()
         {
             // Arrange
-            var bookId = 123;
+            var bookId = 444;
 
             // Act
             var result = this.controller.Borrow(bookId);
@@ -399,6 +399,16 @@ namespace BooksSpotLibrary.Tests
                 Publisher = "TestPublisher",
             };
 
+            var bookBook = new BookEntity
+            {
+                Id = 444,
+                Title = "TestTitle",
+                Author = "Vard",
+                BookStatus = "Reserved",
+                Genre = "TestGenre",
+                Publisher = "TestPublisher",
+            };
+
             database.Books.Add(book);
             database.Books.Add(book2);
             database.Books.Add(book3);
@@ -409,6 +419,7 @@ namespace BooksSpotLibrary.Tests
             database.Books.Add(bookByGenre);
             database.Books.Add(bookByISBNCode);
             database.Books.Add(bookByYear);
+            database.Books.Add(bookBook);
             database.SaveChanges();
 
             return database;
